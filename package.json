@@ -1,0 +1,31 @@
+{
+  "name": "dreamforge-ai",
+  "version": "2.0.0",
+  "description": "DreamForge AI - Full AI chat app with Hindi, Hinglish, English, Marathi, Gujarati, Tamil, Telugu, Bengali support",
+  "type": "module",
+"main": "server.cjs",
+"scripts": {
+  "start": "node server.cjs",
+  "dev": "node server.cjs",
+    "test": "echo \"No test\""
+  },
+  "keywords": [
+    "ai",
+    "chat",
+    "dreamforge",
+    "hindi",
+    "hinglish"
+  ],
+  "author": "Prakash Kushwaha",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.19.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "multer": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

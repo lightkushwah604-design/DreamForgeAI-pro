@@ -1,0 +1,30 @@
+DreamForge AI V5
+================
+
+V5 frontend update keeps the existing V4 files and adds/polishes:
+- Voice Input ON/OFF
+- Microphone ON/OFF (separate setting)
+- Fixed global voice/mic settings so the mic button can use the settings reliably
+- Reply action bar: Like, Not helpful, Copy, Share, Reply, Regenerate
+- Smaller generated-image card with Like, Remix, Save, Share, Reply, Download
+- Smooth chat scrolling
+- Settings: Save settings + Feedback
+- Feedback opens email to dreamforgeaihelp@gmail.com
+
+Backend note:
+The V5 archive intentionally does not include API secrets or the local backend.
+On Termux, keep using the existing server.cjs and .env from your DreamForgeAI-backup:
+
+  cp ~/DreamForgeAI-backup/server.cjs ~/DreamForgeAI/
+  cp ~/DreamForgeAI-backup/.env ~/DreamForgeAI/
+
+Then run:
+  cd ~/DreamForgeAI
+  node server.cjs
+
+In another Termux session:
+  cd ~/DreamForgeAI
+  python3 -m http.server 8080
+
+Open:
+  http://localhost:8080/login.html

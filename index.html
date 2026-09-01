@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DreamForge AI</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#7c5cff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  >
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<header class="header">
+
+  <button id="menuBtn" class="round-btn" type="button">
+    <i class="fa-solid fa-sliders"></i>
+  </button>
+
+  <div class="logo df-brand">
+    <img src="df-logo.webp" alt="DreamForge AI" class="df-brand-logo">
+    <span>DreamForge AI</span>
+  </div>
+
+  <div class="df-header-actions">
+    <button id="voiceToVoiceBtn" class="df-v2v-header" type="button" title="Voice-to-Voice — Coming Soon" aria-label="Voice-to-Voice — Coming Soon">
+      <span class="df-v2v-ring"></span>
+      <i class="fa-solid fa-microphone-lines"></i>
+      <span class="df-v2v-pulse"></span>
+    </button>
+    <button id="settingsBtn" class="round-btn settings df-settings-header" type="button" aria-label="Settings" title="Settings">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </button>
+  </div>
+
+</header>
+
+
+<main id="main">
+
+  <div id="welcome" class="welcome">
+
+    <div class="welcome-icon">
+      ✦
+    </div>
+
+    <h2>What will you create?</h2>
+
+    <p>
+      Chat, create images, or transform an image with one prompt.
+    </p>
+
+  </div>
+
+
+  <section id="chat" class="chat-area"></section>
+
+</main>
+
+
+<!-- =========================
+     IMAGE PREVIEW
+========================= -->
+
+<div
+  id="previewContainer"
+  class="preview-container"
+>
+
+  <img
+    id="uploadPreview"
+    alt="Selected image"
+  >
+
+  <button
+    id="removeImage"
+    class="remove-image"
+    type="button"
+    aria-label="Remove image"
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+</div>
+
+
+<!-- =========================
+     PROMPT AREA
+========================= -->
+
+<div class="prompt-wrapper">
+
+  <div class="prompt-box">
+
+    <!-- Image picker -->
+
+    <label
+      class="prompt-action upload-action"
+      title="Upload image"
+    >
+
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        hidden
+      >
+
+      <i class="fa-regular fa-image"></i>
+
+    </label>
+
+
+    <!-- Attachment -->
+
+    <button
+      id="attachBtn"
+      class="prompt-action"
+      type="button"
+      title="Attach image"
+    >
+      <i class="fa-solid fa-paperclip"></i>
+    </button>
+
+
+    <!-- Message -->
+
+    <textarea
+      id="prompt"
+      rows="1"
+      autocomplete="off"
+      placeholder="Message DreamForge AI..."
+      aria-label="Message DreamForge AI"
+    ></textarea>
+
+
+    <!-- Voice -->
+
+    <button
+      id="voiceBtn"
+      class="prompt-action"
+      type="button"
+      title="Voice input"
+    >
+      <i class="fa-solid fa-microphone"></i>
+    </button>
+
+
+    <!-- Main button -->
+
+    <button
+      id="generateBtn"
+      class="generate-btn"
+      type="button"
+      title="Send"
+      aria-label="Send"
+    >
+
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+    </button>
+
+  </div>
+
+
+  <div class="hint">
+    DreamForge AI can chat, create and transform images.
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+     HISTORY DRAWER
+========================= -->
+<div id="dfHistoryBackdrop" class="df-drawer-backdrop" aria-hidden="true"></div>
+<aside id="dfHistoryDrawer" class="df-drawer df-history-drawer" aria-hidden="true" aria-label="Chat history">
+  <div class="df-drawer-head">
+    <div>
+      <div class="df-drawer-title"><i class="fa-solid fa-clock-rotate-left"></i> History</div>
+      <div class="df-drawer-subtitle">Your chats and folders</div>
+    </div>
+    <button id="dfHistoryClose" class="df-drawer-close" type="button" aria-label="Close history">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="df-history-tools">
+    <button id="dfNewChatBtn" class="df-history-new" type="button">
+      <i class="fa-solid fa-plus"></i> New chat
+    </button>
+    <button id="dfNewFolderBtn" class="df-icon-tool" type="button" title="New folder" aria-label="New folder">
+      <i class="fa-solid fa-folder-plus"></i>
+    </button>
+  </div>
+
+  <label class="df-history-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input id="dfHistorySearch" type="search" placeholder="Search chats" autocomplete="off">
+  </label>
+
+  <div id="dfHistoryFolders" class="df-history-folders"></div>
+  <div id="dfHistoryList" class="df-history-list"></div>
+</aside>
+
+<!-- =========================
+     SETTINGS DRAWER
+========================= -->
+<div id="dfSettingsBackdrop" class="df-drawer-backdrop" aria-hidden="true"></div>
+<aside id="dfSettingsDrawer" class="df-drawer df-settings-drawer" aria-hidden="true" aria-label="Settings">
+  <div class="df-drawer-head">
+    <div>
+      <div class="df-drawer-title"><i class="fa-solid fa-gear"></i> Settings</div>
+      <div class="df-drawer-subtitle">DreamForge AI preferences</div>
+    </div>
+    <button id="dfSettingsClose" class="df-drawer-close" type="button" aria-label="Close settings">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="df-settings-list">
+    <div class="df-setting-row">
+      <div class="df-setting-copy"><strong>Dark mode</strong><span>Use a dark glass theme</span></div>
+      <button id="dfDarkModeToggle" class="df-switch" type="button" role="switch" aria-checked="false"><span></span></button>
+    </div>
+<div class="df-setting-row">
+      <div class="df-setting-copy"><strong>Reduce animations</strong><span>Use lighter UI motion</span></div>
+      <button id="dfReduceMotionToggle" class="df-switch" type="button" role="switch" aria-checked="false"><span></span></button>
+    </div>
+    <div class="df-setting-row">
+      <div class="df-setting-copy"><strong>Voice input</strong><span>Use microphone for messages</span></div>
+      <button id="dfVoiceInputToggle" class="df-switch" type="button" role="switch" aria-checked="true" aria-label="Microphone input"><span></span></button>
+    </div>
+    <div class="df-setting-row">
+      <div class="df-setting-copy"><strong>Microphone</strong><span>Allow or block microphone access</span></div>
+      <button id="dfMicToggle" class="df-switch" type="button" role="switch" aria-checked="true" aria-label="Microphone"><span></span></button>
+    </div>
+    <div class="df-setting-row df-setting-action-row df-setting-actions-grid">
+      <button id="dfSaveSettingsBtn" class="df-setting-action" type="button"><i class="fa-solid fa-floppy-disk"></i> Save settings</button>
+      <button id="dfFeedbackBtn" class="df-setting-action" type="button"><i class="fa-solid fa-message"></i> Feedback</button>
+    </div>
+    <div class="df-setting-row df-setting-action-row">
+      <button id="dfClearHistoryBtn" class="df-danger-btn" type="button"><i class="fa-solid fa-trash"></i> Clear all history</button>
+    </div>
+    <div class="df-setting-row df-setting-action-row">
+      <button id="dfLogoutBtn" class="df-logout-btn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </div>
+</aside>
+
+
+<!-- =========================
+     LOADING
+========================= -->
+
+<div
+  id="loading"
+  class="loading df-legacy-loading"
+  aria-hidden="true"
+>
+
+  <div class="generation-card">
+
+    <div class="generation-animation">
+
+      <div class="orbit"></div>
+
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+    </div>
+
+    <h3 id="loadingTitle">
+      DreamForge AI
+    </h3>
+
+    <p id="loadingText">
+      Thinking...
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+
+<div
+  id="toast"
+  class="toast"
+  role="status"
+  aria-live="polite"
+>
+  Done
+</div>
+
+
+
+<script>
+(function(){
+  const key = "dreamforge_google_session_v1";
+  if(!localStorage.getItem(key)){
+    window.location.replace("login.html");
+  }
+})();
+</script>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(err => {
+      console.warn("DreamForge PWA service worker:", err);
+    });
+  });
+}
+</script>
+
+</body>
+</html>

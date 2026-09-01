@@ -1,0 +1,32 @@
+DreamForge AI — Google Login Fix + Professional Voice
+
+IMPORTANT:
+Google Login is handled by Google's Sign-In SDK. DreamForge never receives your Google password.
+
+1. In Google Cloud Console open:
+   Google Auth Platform -> Clients
+2. Open the WEB APPLICATION OAuth client:
+   1090446382563-6b2p94mbt7cps8mb9kdp6djgpftrse7n.apps.googleusercontent.com
+3. Under Authorized JavaScript origins add BOTH:
+   http://localhost:8080
+   http://127.0.0.1:8080
+4. Save.
+5. Do not open login.html from Downloads/File Manager. That gives file:// or content:// and Google will reject it.
+6. In Termux:
+   cd ~/DreamForgeAI
+   python3 -m http.server 8080
+7. In Chrome open exactly:
+   http://localhost:8080/login.html
+8. Use the official Google Sign-In button shown on the page. It opens Google's account chooser.
+9. If the project OAuth consent screen is in Testing, add the Google account you are using as a Test user in Google Cloud.
+10. If you still get an origin error, make sure the browser URL exactly matches one of the origins above (scheme + host + port).
+
+Backend:
+   cd ~/DreamForgeAI
+   node server.cjs
+Keep backend running on port 8000.
+
+Voice-to-Voice:
+- Header microphone is purple and next to Settings.
+- Tap it, allow microphone permission, speak, and the recognized text is sent to chat.
+- The AI response is spoken automatically when Voice-to-Voice is active.

@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: dreamforgeai-pro
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.cjs
+    autoDeploy: true

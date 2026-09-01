@@ -1,0 +1,23 @@
+{
+  "name": "DreamForge AI",
+  "short_name": "DreamForge AI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#dcecff",
+  "theme_color": "#7c5cff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "df-logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "df-logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
