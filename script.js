@@ -26,8 +26,12 @@ const API_BASE =
   window.DREAMFORGE_API ||
   "https://dreamforgeai-pro.onrender.com";
 
-function getV6Session(){
-  try{ return JSON.parse(localStorage.getItem("dreamforge_google_session_v1") || "null"); }catch(_){ return null; }
+function getV6Session()  "reply": "...",
+  "agent": "default"
+}{
+  try  "reply": "...",
+  "agent": "default"
+}{ return JSON.parse(localStorage.getItem("dreamforge_google_session_v1") || "null"); }catch(_){ return null; }
 }
 function v6AccountKey(base){
   const u=getV6Session();
@@ -1220,7 +1224,13 @@ function instantGreeting(message){
 }
 
 async function handleChat(){
+
+  console.log("handleChat called", isBusy);
+
   if(isBusy) return;
+
+  ...
+}
 
   const message=promptInput ? promptInput.value.trim() : "";
   if(!message && !selectedFile){ showToast("Message ya image add karo"); return; }
@@ -1299,13 +1309,19 @@ async function handleChat(){
       showToast("Chat request failed");
     }
   }finally{
-    if(streamFrame) cancelAnimationFrame(streamFrame);
-    activeChatController=null;
-    setChatLoading(false);
-    setBusy(false);
-    if(voiceToVoiceActive) voiceToVoiceActive=false;
-    scrollChat();
-  }
+
+  console.log("finally reached");
+
+  if(streamFrame) cancelAnimationFrame(streamFrame);
+
+  activeChatController=null;
+
+  setChatLoading(false);
+
+  setBusy(false);
+
+  scrollChat();
+}
 }
 
 
