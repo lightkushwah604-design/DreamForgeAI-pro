@@ -1078,8 +1078,6 @@ async function sendChat(message, signal = null, onChunk = null){
     }
   }
 
-  // SSE / streaming parser. Supports Cloudflare/OpenAI-style choices.delta.content
-  // as well as the older response/result/text formats.
   const reader=response.body.getReader();
   const decoder=new TextDecoder("utf-8");
   let buffer="";
@@ -1115,7 +1113,7 @@ async function sendChat(message, signal = null, onChunk = null){
   while(true){
     const {value,done}=await reader.read();
     if(done) break;
-    buffer += decoder.decode(value,{stream:true});
+    buffer += decoder.decode(value,{stream: false});
     const lines=buffer.split(/\r?\n/);
     buffer=lines.pop() || "";
     for(const line of lines) parseLine(line);

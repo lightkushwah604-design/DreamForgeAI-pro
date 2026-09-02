@@ -50,7 +50,7 @@ app.post("/chat", async (req,res)=>{
         image: (image.includes(",")? image.split(",")[1]: image).slice(0, 4000000)
       };
     } else {
-      cfUrl = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct`;
+      cfUrl = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8-fast`;
       // Keep context short for speed
       let userMsg = message;
       if(userMsg.length > 12000) userMsg = userMsg.slice(0,12000) + "\n...[truncated]";
@@ -105,20 +105,17 @@ app.post("/chat", async (req,res)=>{
             "";
 
           if (typeof text === "string") reply += text;
-        } catch (_) {
-          // Ignore incomplete SSE JSON chunks
-        }
-      }
-    });
+        }catch(err){
+  console.error("========== CHAT ERROR ==========");
+  console.error("Status:", err.response?.status);
+  console.error("Data:", JSON.stringify(err.response?.data, null, 2));
+  console.error("Message:", err.message);
 
-    await new Promise((resolve, reject) => {
-      cf.data.on("end", resolve);
-      cf.data.on("error", reject);
-    });
-
-    if (!reply.trim()) {
-      reply = "No reply generated.";
-    }
+  res.status(500).json({
+    error: err.message,
+    reply: "⚠️ Chat failed"
+  });
+}
 
     return res.json({
       reply: reply.trim(),
@@ -215,7 +212,7 @@ app.post("/websearch", async (req,res)=>{
     } else {
       // LLM based web search simulation
       const cf = await axios.post(
-        `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct`,
+        `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8-fast`,
         { messages:[{role:"system",content:"You are web search engine. Answer with latest info up to 2026. Give 5 bullet points with sources like [1] example.com"},{role:"user",content:`Web search: ${query}`}] },
         { headers:{Authorization:`Bearer ${API_TOKEN}`}, timeout:40000 }
       );
